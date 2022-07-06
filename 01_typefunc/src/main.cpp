@@ -1,18 +1,14 @@
 #include <iostream>
-#include <string>
-#include <cstring>
-#include <type_traits>
+#include "lrn/types.hpp"
 
-template<typename Type>
-std::string type_to_string(){
-	std::string fname(__PRETTY_FUNCTION__);
-	
-	const char * with_type = "Type = ";
-	auto pos = fname.find(with_type);
-	fname = fname.substr(pos + std::strlen(with_type));
+void test_static_array() {
 
-	
-	return fname.substr(0, fname.find(";"));
+	int a[5]{1,3, 4,5,6};
+	auto acopy = a;
+
+	double b[] {1, 2, 3};
+
+	std::cout << lrn::array_size(b) << " array size\n";
 }
 
 
@@ -23,7 +19,7 @@ auto summation_one(ArgType1 a, ArgType2 b){
 
 	if constexpr(std::is_integral_v<common_t>) {
 		using type_t = std::make_signed_t<common_t>;
-		std::cout << type_to_string<type_t>() << "\n" ;
+		std::cout << lrn::type_to_string<type_t>() << "\n" ;
 		type_t sum{};
 		
 		for (auto i = a; i < b; ++i){
@@ -33,7 +29,7 @@ auto summation_one(ArgType1 a, ArgType2 b){
 		return sum;
 	} else {
 		using type_t = common_t;
-		std::cout << type_to_string<type_t>() << "\n" ;
+		std::cout << lrn::type_to_string<type_t>() << "\n" ;
 		type_t sum{};
 		
 		for (auto i = a; i < b; ++i){
@@ -48,9 +44,9 @@ auto summation_one(ArgType1 a, ArgType2 b){
 int main(int argc, char* argv[]) {
 	//std::cout << "hello world";
 	
-	std::cout << summation_one(0, 10) << "\n";
-	std::cout << summation_one(0, 10.0) << "\n";
+	//std::cout << summation_one(0, 10) << "\n";
+	//std::cout << summation_one(0, 10.0) << "\n";
 
-//	std::cout << type_to_string<int>() << "\n";
+	test_static_array();
 	return 0;
 }
